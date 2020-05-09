@@ -1,0 +1,23 @@
+{
+  "name": "grpc_stringreverser",
+  "version": "1.0.0",
+  "description": "gRPC string reversing web service",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Sukina Svetlana",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.1.0",
+    "async": "^1.5.2",
+    "google-protobuf": "^3.0.0",
+    "grpc": "^1.11.0",
+    "lodash": "^4.6.1",
+    "lodash.isempty": "^4.4.0",
+    "lodash.omitby": "^4.6.0",
+    "minimist": "^1.2.0",
+    "mongodb": "^3.5.5"
+  }
+}
