@@ -20,5 +20,11 @@ module.exports = class Post {
      * @type {number}
      */
     this.likeAmount = post.likeAmount || 0;
+
+    /**
+     * Post`s comments
+     * @type {Comment[]}
+     */
+    this.comments = post.comments || [];
   }
 };

@@ -1,9 +1,8 @@
 const DataBase = require("./dataBaseService");
 const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 
 const publishPost = async (request) => {
-  // TODO: save to Db, send new info to all clients
-
   const post = new Post({
     message: request.message,
     userName: request.userName
@@ -22,15 +21,24 @@ const getListOfPosts = async () => {
   return allPosts;
 }
 
-const likePost = (postId, userName) => {
-  // TODO: change likeAmount in DB
+const likePost = async (postId) => {
+  const post = await DataBase.getPostById(postId);
+  const newLikes = post.likeAmount + 1;
+
+  const updatedPost = await DataBase.updatePostById(postId, {likeAmount: newLikes});
+  return updatedPost.likeAmount;
 };
 
+const commentPost = async (postId, userName, message) => {
+  const comment = new Comment({message: message, userName: userName});
 
+  return await DataBase.commentPost(postId, comment);
+}
 
 
 module.exports = {
   publishPost,
   getListOfPosts,
-  likePost
+  likePost,
+  commentPost
 }

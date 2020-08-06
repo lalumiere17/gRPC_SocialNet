@@ -10,15 +10,16 @@ package socialnet;
 // The reversing string service definition.
 service SocialNet {
 
-  rpc Join (stream SendRequest) returns (stream NewPost) {}
+  //Connect to server
+  rpc Join (SendRequest) returns (stream Post) {}
+  //Send new post
   rpc Send (SendRequest) returns (SendResponse) {}
+  //Get list of posts
   rpc List (Empty) returns (GetListResponse) {}
-  //rpc Like (LikeRequest) returns (LikeResponse) {}
-  // Publish post to the feeds
-  // rpc PublishPost (PublishRequest) returns (PublishResponse) {}
-
-  // Like post in feeds
-  // rpc LikePost (LikeRequest) returns (LikeResponse) {}
+  //Like post in feeds
+  rpc LikePost (LikeRequest) returns (LikeResponse) {}
+  //Comment post. Not working still
+  rpc CommentPost (CommentRequest) returns (SendResponse) {}
 }
 
 message Empty {}
@@ -32,13 +33,6 @@ message SendResponse {
   string postId = 1;
 }
 
-message NewPost {
-  string postId = 1;
-  string message = 2;
-  string userName = 3;
-  int32 likeAmount = 4;
-}
-
 message GetListResponse {
   repeated Post postList = 1;
 }
@@ -48,12 +42,24 @@ message Post {
   string message = 2;
   string userName = 3;
   int32 likeAmount = 4;
+  repeated Comment comments = 5;
 }
-message LikeRequest{
+message LikeRequest {
   string postId = 1;
   string userName = 2;
 }
 
 message LikeResponse {
   int32 likeAmount = 1;
+}
+
+message Comment {
+  string userName = 1;
+  string message = 2;
+}
+
+message CommentRequest {
+  string postId = 1;
+  string userName = 2;
+  string message = 3;
 }

@@ -55,14 +55,29 @@ const updatePostById = async (postId, updateInfo) => {
 
   return await dbClient
     .collection(mongodb.postCollection)
-    .updateOne({ _id: new ObjectID(postId) }, { $set: updateObject })
-    .then(result => result)
+    .updateOne({_id: new ObjectID(postId)}, {$set: updateObject})
+    .then(result => {
+      return getPostById(postId);
+    })
     .catch(error => console.error(error))
 }
+
+
+const commentPost = async (postId, comment) => {
+  return await dbClient
+    .collection(mongodb.postCollection)
+    .updateOne({_id: new ObjectID(postId)}, { $push: { comments: comment } })
+    .then(result => {
+      return getPostById(postId);
+    })
+    .catch(error => console.error(error))
+}
+
 
 module.exports = {
   createPost,
   getAll,
   getPostById,
-  updatePostById
+  updatePostById,
+  commentPost
 }
